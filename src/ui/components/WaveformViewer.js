@@ -215,9 +215,28 @@ export class WaveformViewer {
   async loadAudioFromUrl(url) {
     console.log('[Waveform] loadAudioFromUrl() called with:', url);
 
-    // Skip video download on external access - go straight to sample waveform
-    console.log('[Waveform] Skipping video audio extraction, loading sample waveform directly...');
-    return await this.loadSampleWaveform();
+    try {
+      // Try to load and decode audio from video (works on localhost)
+      const response = await fetch(url);
+      console.log('[Waveform] Fetch response:', response.status);
+
+      const arrayBuffer = await response.arrayBuffer();
+      console.log('[Waveform] ArrayBuffer size:', arrayBuffer.byteLength);
+
+      const audioContext = new AudioContext();
+      this.audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+      this.duration = this.audioBuffer.duration;
+      console.log('[Waveform] Audio decoded successfully, duration:', this.duration);
+
+      this.render();
+      return true;
+    } catch (error) {
+      console.error('[Waveform] Failed to decode audio from video:', error);
+
+      // Fallback: load pre-generated sample waveform
+      console.log('[Waveform] Loading sample waveform as fallback...');
+      return await this.loadSampleWaveform();
+    }
   }
 
   /**

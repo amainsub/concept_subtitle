@@ -25,8 +25,8 @@ async function generateWaveform(inputFile, outputFile) {
     const duration = parseFloat(stdout.trim());
 
     console.log('Downsampling for web...');
-    // Downsample to reduce file size (keep 1 in every 1000 samples)
-    const downsampleFactor = 1000;
+    // Downsample to reduce file size (keep 1 in every 2000 samples for smaller file)
+    const downsampleFactor = 2000;
     const downsampledLength = Math.floor(samples.length / 2 / downsampleFactor);
 
     const leftChannel = [];
