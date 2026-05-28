@@ -6,7 +6,20 @@ dist/
 .idea/
 .vscode/
 
-# Exclude sample input files
+# Environment files
+.env
+.env.*
+
+# Test/Debug files
+public/test-*.html
+public/debug.html
+
+# Exclude sample input files (symlinks)
 public/samples/*.mp4
 public/samples/*.srt
 public/samples/*.ass
+
+# Keep only the main waveform data
+public/samples/sample-waveform-10s.json
+public/samples/sample-waveform-lite.json
+public/samples/sample-waveform.json
