@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Seek</title>
+</head>
+<body>
+  <video id="testVideo" controls width="400" src="/samples/default.mp4"></video>
+  <br>
+  <button onclick="seekTo5()">Seek to 5 seconds</button>
+  <button onclick="seekTo10()">Seek to 10 seconds</button>
+  <div id="info"></div>
+  
+  <script>
+    const video = document.getElementById('testVideo');
+    const info = document.getElementById('info');
+    
+    video.addEventListener('loadedmetadata', () => {
+      info.innerHTML = `Duration: ${video.duration}s`;
+    });
+    
+    video.addEventListener('timeupdate', () => {
+      info.innerHTML = `Current time: ${video.currentTime.toFixed(2)}s / ${video.duration.toFixed(2)}s`;
+    });
+    
+    function seekTo5() {
+      console.log('Seeking to 5');
+      video.currentTime = 5;
+    }
+    
+    function seekTo10() {
+      console.log('Seeking to 10');
+      video.currentTime = 10;
+    }
+  </script>
+</body>
+</html>

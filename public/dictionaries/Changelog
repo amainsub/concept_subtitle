@@ -1,0 +1,107 @@
+이 확장은 한국어 맞춤법을 검사할 수 있는 확장입니다.
+hunspell 한국어 데이터 프로젝트의 사전데이터를 사용하며, hunspell 한국어 데이터
+와 동일하게 다음 라이센스 정책을 따라 배포됩니다.
+(https://groups.google.com/forum/#!topic/spellcheck-ko/NlM9DA0GHWY)
+	- 3중 라이센스 (GPL/LGPL/MPL)
+	- 크리에이티브 커먼즈 저작자표시 4.0 국제 라이선스(CC BY 4.0)
+
+This uses the dictionary of 'hunspell 한국어 데이터' project as a dictionary
+and it follows the license of 'hunspell 한국어 데이터' project.
+	- 3 licences(GPL/LGPL/MPL).
+	- Creative Commons license Attribution 4.0 International (CC BY 4.0)
+
+문의 : https://github.com/jihuichoi/korean-spellchecker
+
+** hunspell 한국어 데이터 프로젝트
+: https://github.com/spellcheck-ko/hunspell-dict-ko/
+
+----------
+0.7.91-1 (2019-08-13)
+- hunspell-dict-ko 업데이트(0.7.91)
+
+0.7.1-2 (2018/03/24)
+- 버그 수정
+
+0.7.1-1 (2018/03/21)
+- hunspell-dict-ko 업데이트(0.7.1)
+
+0.6.4-1 (2017/09/08)
+- hunspell-dict-ko 업데이트(0.6.4)
+
+0.6.3-1 (2017/08/21)
+- hunspell-dict-ko 업데이트(0.6.3)
+
+0.6.2-1 (2017/08/21)
+- hunspell-dict-ko 업데이트(0.6.2)
+
+0.6.0-1 (2017/02/20)
+- hunspell-dict-ko 업데이트(0.6.0)
+
+** 아래 changelog 에 대한 설명.
+
+0.5.6.2 (2015/10/27)
+- 파이어폭스 호환 버전 변경
+
+0.5.6.1 (2015/09/07)
+- 리브레오피스 호환 버전 변경
+
+0.5.6 (2012/10/7)
+- hunspell-dict-ko 업데이트(0.5.6)
+
+0.5.5 (2011/09/11)
+- hunspell-dict-ko 업데이트(0.5.5)
+
+0.5.4 (2011/07/18)
+- hunspell-dict-ko 업데이트(0.5.4)
+
+0.5.3 (2011/04/30)
+- hunspell-dict-ko 업데이트(0.5.3)
+
+0.5.2 (2011-04-02)
+- hunspell-dict-ko 업데이트(0.5.2)
+
+0.5.0 (2010-10-24)
+- hunspell-dict-ko 업데이트(0.5.0)
+
+0.4.3 (2010-07-31)
+- hunspell-dict-ko 업데이트(0.4.3)
+   
+0.4.2 (2010-07-04)
+- hunspell-dict-ko 업데이트(0.4.2)
+
+0.4.1 (2010-06-06)
+- hunspell-dict-ko 업데이트(0.4.1)
+
+0.4.0 (2010-02-28)
+- hunspell-dict-ko 업데이트(0.4.0)
+
+0.3.5 (2009-10-31)
+- hunspell-dict-ko 업데이트(0.3.5)
+
+0.3.3 (2009-08-31)
+- hunspell-dict-ko 업데이트(0.3.3)
+
+0.3.2 (2009-07-26)
+- hunspell-dict-ko 업데이트(0.3.2)
+
+0.3.1 (2009-07-05)
+- hunspell-dict-ko 업데이트(0.3.1)
+
+0.3.0 (2009-06-20)
+- hunspell-dict-ko 업데이트(0.3.0)
+
+0.2.4 (2009-05-24)
+- hunspell-dict-ko 업데이트(0.2.4)
+
+0.2.3 (2009-05-10
+- hunspell-dict-ko 업데이트(0.2.3)
+
+0.2.2 (2009-04-12)
+- hunspell-dict-ko 업데이트(0.2.2)
+
+0.2.1 (2009-03-29)
+- hunspell-dict-ko 업데이트(0.2.1)
+
+0.2.0 (2009-03-15)
+- 최초 패키징
+- hunspell-dict-ko 기반(0.2.0)

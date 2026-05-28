@@ -1,0 +1,233 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5em;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+header p {
+  color: #7f8c8d;
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background: #ecf0f1;
+  color: #2c3e50;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background: #bdc3c7;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-success {
+  background: #2ecc71;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #27ae60;
+}
+
+.btn-danger {
+  background: #e74c3c;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c0392b;
+}
+
+.format-select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-left: auto;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: white;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.editor-container {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.subtitle-list {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+#subtitleTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#subtitleTable thead {
+  position: sticky;
+  top: 0;
+  background: #ecf0f1;
+  z-index: 10;
+}
+
+#subtitleTable th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border-bottom: 2px solid #bdc3c7;
+}
+
+#subtitleTable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+#subtitleTable tbody tr {
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#subtitleTable tbody tr:hover {
+  background: #f8f9fa;
+}
+
+#subtitleTable tbody tr.selected {
+  background: #d5e8f7;
+}
+
+.text-cell {
+  max-width: 400px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.text-editor {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.text-editor h3 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.editor-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.editor-controls input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: monospace;
+}
+
+.editor-controls span {
+  color: #7f8c8d;
+  font-weight: bold;
+}
+
+#textInput {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 15px;
+}
+
+#updateBtn {
+  width: 100%;
+}
+
+.drop-zone {
+  border: 3px dashed #bdc3c7;
+  border-radius: 8px;
+  padding: 60px;
+  text-align: center;
+  background: white;
+  color: #7f8c8d;
+  transition: all 0.3s;
+}
+
+.drop-zone.dragover {
+  border-color: #3498db;
+  background: #ebf5fb;
+  color: #3498db;
+}
+
+.drop-zone p {
+  margin: 10px 0;
+}
+
+.drop-zone small {
+  color: #95a5a6;
+}
