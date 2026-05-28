@@ -7,9 +7,26 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    host: true, // Allow external connections
+    host: '0.0.0.0', // Listen on all network interfaces
+    strictPort: false,
+    hmr: {
+      // Force WSS for ngrok HTTPS tunnels
+      protocol: 'wss',
+      host: 'ktsample.ngrok.io',
+      clientPort: 443,
+    },
+    cors: {
+      origin: '*', // Allow all origins
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['*'],
+      credentials: true,
+    },
     headers: {
-      'Cache-Control': 'public, max-age=31536000', // Cache static files for 1 year
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': '*',
+      'Cross-Origin-Resource-Policy': 'cross-origin',
+      'Cross-Origin-Embedder-Policy': 'credentialless',
     },
   },
 });

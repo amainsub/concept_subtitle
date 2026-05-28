@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Waveform Test</title>
+</head>
+<body>
+  <h1>Waveform Load Test</h1>
+  <div id="status">Loading...</div>
+  <canvas id="canvas" width="800" height="200" style="border: 1px solid #ccc;"></canvas>
+
+  <script>
+    (async () => {
+      const status = document.getElementById('status');
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      try {
+        status.textContent = 'Fetching waveform data...';
+        console.log('Fetching:', window.location.origin + '/samples/sample-waveform-full.json');
+
+        const response = await fetch('/samples/sample-waveform-full.json');
+        console.log('Response status:', response.status);
+
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+
+        status.textContent = 'Parsing JSON...';
+        const data = await response.json();
+
+        console.log('Data loaded:', {
+          channels: data.numberOfChannels,
+          length: data.length,
+          sampleRate: data.sampleRate,
+          duration: data.duration
+        });
+
+        status.textContent = 'Drawing waveform...';
+
+        // Use raw data directly (no AudioBuffer needed for low sample rates)
+        const samples = data.channelData[0];
+        const width = canvas.width;
+        const height = canvas.height;
+        const step = Math.ceil(samples.length / width);
+
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.strokeStyle = '#0f0';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+
+        for (let i = 0; i < width; i++) {
+          const idx = i * step;
+          const value = samples[idx] || 0;
+          const y = (1 - value) * height / 2;
+
+          if (i === 0) {
+            ctx.moveTo(i, y);
+          } else {
+            ctx.lineTo(i, y);
+          }
+        }
+
+        ctx.stroke();
+
+        status.textContent = '✅ Success! Duration: ' + (data.duration / 60).toFixed(1) + ' minutes';
+        console.log('✅ Waveform rendered successfully');
+
+      } catch (error) {
+        status.textContent = '❌ Error: ' + error.message;
+        console.error('❌ Error:', error);
+      }
+    })();
+  </script>
+</body>
+</html>

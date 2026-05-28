@@ -4,10 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>subtitle-edit-web</title>
+    <script>
+      // Disable HMR error overlay for ngrok environment
+      if (window.location.hostname.includes('ngrok')) {
+        const originalError = console.error;
+        console.error = function(...args) {
+          const msg = args.join(' ');
+          if (msg.includes('failed to connect to websocket') ||
+              msg.includes('WebSocket') ||
+              msg.includes('Failed to send error to Vite server')) {
+            return; // Suppress WebSocket errors in ngrok
+          }
+          originalError.apply(console, args);
+        };
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/main.js?v=20260528-13-menu"></script>
   </body>
 </html>

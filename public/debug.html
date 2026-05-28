@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Debug Info</title>
+  <style>
+    body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #0f0; }
+    h1 { color: #0ff; }
+    .log { margin: 10px 0; padding: 10px; background: #000; border-left: 3px solid #0f0; }
+    .error { border-color: #f00; color: #f00; }
+    .success { border-color: #0f0; color: #0f0; }
+    button { padding: 10px 20px; margin: 10px 0; font-size: 16px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🔍 Waveform Debug Info</h1>
+  <button onclick="checkWaveform()">Check Waveform Status</button>
+  <button onclick="clearCache()">Clear localStorage Cache</button>
+  <div id="output"></div>
+
+  <script>
+    function log(msg, type = 'log') {
+      const div = document.createElement('div');
+      div.className = `log ${type}`;
+      div.textContent = msg;
+      document.getElementById('output').appendChild(div);
+      console.log(msg);
+    }
+
+    function clearCache() {
+      localStorage.removeItem('sample-waveform-data');
+      log('✅ localStorage cache cleared', 'success');
+      log('Now refresh the main app (Cmd+Shift+R)');
+    }
+
+    async function checkWaveform() {
+      document.getElementById('output').innerHTML = '';
+
+      log('=== Checking Waveform Status ===');
+
+      // 1. Check if file exists
+      log('1️⃣ Checking file accessibility...');
+      try {
+        const response = await fetch('/samples/sample-waveform-full.json');
+        log(`   HTTP Status: ${response.status} ${response.ok ? '✅' : '❌'}`, response.ok ? 'success' : 'error');
+
+        if (response.ok) {
+          const size = response.headers.get('content-length');
+          log(`   File size: ${(size / 1024 / 1024).toFixed(2)} MB`);
+        }
+      } catch (error) {
+        log(`   ❌ Fetch error: ${error.message}`, 'error');
+        return;
+      }
+
+      // 2. Check localStorage cache
+      log('2️⃣ Checking localStorage cache...');
+      const cached = localStorage.getItem('sample-waveform-data');
+      if (cached) {
+        const size = cached.length;
+        log(`   ✅ Cache found: ${(size / 1024 / 1024).toFixed(2)} MB`, 'success');
+        try {
+          const data = JSON.parse(cached);
+          log(`   Channels: ${data.numberOfChannels}`);
+          log(`   Length: ${data.length} samples`);
+          log(`   Sample rate: ${data.sampleRate} Hz`);
+          log(`   Duration: ${(data.duration / 60).toFixed(1)} minutes`);
+        } catch (e) {
+          log(`   ⚠️ Cache corrupted: ${e.message}`, 'error');
+        }
+      } else {
+        log('   ℹ️ No cache found (will download on first load)');
+      }
+
+      // 3. Test loading
+      log('3️⃣ Testing waveform load...');
+      try {
+        const response = await fetch('/samples/sample-waveform-full.json');
+        const data = await response.json();
+
+        log(`   ✅ JSON parsed successfully`, 'success');
+        log(`   Channels: ${data.numberOfChannels}`);
+        log(`   Samples: ${data.length}`);
+        log(`   Sample rate: ${data.sampleRate} Hz`);
+        log(`   Duration: ${(data.duration / 60).toFixed(1)} minutes`);
+
+        // Check if sample rate is valid
+        if (data.sampleRate < 3000) {
+          log(`   ✅ Sample rate < 3000 Hz, will use raw data (correct!)`, 'success');
+        } else {
+          log(`   ✅ Sample rate >= 3000 Hz, can use AudioBuffer`, 'success');
+        }
+
+        // Check data integrity
+        if (data.channelData && data.channelData[0] && data.channelData[0].length > 0) {
+          log(`   ✅ Channel data valid (${data.channelData[0].length} samples)`, 'success');
+          log(`   First 5 samples: ${data.channelData[0].slice(0, 5).join(', ')}`);
+        } else {
+          log(`   ❌ Channel data missing or invalid!`, 'error');
+        }
+
+      } catch (error) {
+        log(`   ❌ Load error: ${error.message}`, 'error');
+        return;
+      }
+
+      log('');
+      log('=== Summary ===');
+      log('✅ File is accessible and valid', 'success');
+      log('✅ Data can be loaded and parsed', 'success');
+      log('');
+      log('If main app still shows no waveform, check browser console for:');
+      log('  - "🚀 Subtitle Edit Web v5.1"');
+      log('  - "[Waveform] Waveform rendered successfully"');
+      log('  - Any error messages');
+    }
+  </script>
+</body>
+</html>

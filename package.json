@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:ngrok": "cp .env.ngrok .env && vite",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",

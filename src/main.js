@@ -1,6 +1,8 @@
 /**
  * Subtitle Edit Web - 원본과 동일한 UI/UX
+ * Version: 5.6 (Cleaned context menu)
  */
+console.log('🚀 Subtitle Edit Web v5.6 - Cleaned Menu 🧹');
 import './style.css';
 import { Subtitle } from './core/common/Subtitle.js';
 import { Paragraph } from './core/common/Paragraph.js';
@@ -2134,9 +2136,7 @@ class SubtitleEdit {
       { separator: true },
       { label: '선택한 영역 재생하기', action: () => this.playSelectedRegion(region) },
       { separator: true },
-      { label: '파형과 스펙트로그램 결합', action: () => alert('스펙트로그램 기능은 개발 중입니다') },
-      { label: '타임코드 알아내기', action: () => this.showTimecode(region) },
-      { label: '무음 탐색', action: () => alert('무음 탐색 기능은 개발 중입니다') }
+      { label: '타임코드 알아내기', action: () => this.showTimecode(region) }
     ];
 
     menuItems.forEach(item => {
@@ -2379,15 +2379,20 @@ class SubtitleEdit {
         };
       }
 
-      // Load waveform from video element (try to fetch audio data)
+      // Load waveform data
       console.log('Loading waveform from video...');
 
-      // Try to load audio data from URL for waveform
+      // Load pre-generated waveform data
       try {
-        await this.waveformViewer.loadAudioFromUrl(videoUrl);
-        console.log('Waveform audio data loaded');
+        const loaded = await this.waveformViewer.loadAudioFromUrl(videoUrl);
+        if (loaded) {
+          console.log('✅ Waveform audio data loaded');
+        } else {
+          console.warn('⚠️ Could not load waveform audio data, using video element duration only');
+          await this.waveformViewer.loadAudioFromVideo(videoElement);
+        }
       } catch (error) {
-        console.warn('Could not load waveform audio data, using video element duration only:', error);
+        console.error('❌ Waveform loading error:', error);
         await this.waveformViewer.loadAudioFromVideo(videoElement);
       }
 
