@@ -89,31 +89,44 @@ export class WaveformViewer {
    */
   async loadSampleWaveform() {
     try {
+      console.log('[Waveform] loadSampleWaveform() called');
+
       // Try to load cached waveform from localStorage first
       const cachedData = localStorage.getItem('sample-waveform-data');
       if (cachedData) {
-        console.log('Loading waveform from cache...');
+        console.log('[Waveform] Loading from localStorage cache...');
         const data = JSON.parse(cachedData);
         this.restoreAudioBuffer(data);
+        console.log('[Waveform] Successfully loaded from cache');
         return true;
       }
 
       // Download from server
-      console.log('Downloading sample waveform (7MB)...');
+      console.log('[Waveform] No cache found, downloading from /samples/sample-waveform.json (7MB)...');
       const response = await fetch('/samples/sample-waveform.json');
-      if (!response.ok) throw new Error('Sample waveform not found');
+      console.log('[Waveform] Fetch response status:', response.status, response.ok);
 
+      if (!response.ok) throw new Error('Sample waveform not found: ' + response.status);
+
+      console.log('[Waveform] Parsing JSON...');
       const data = await response.json();
+      console.log('[Waveform] JSON parsed, channels:', data.numberOfChannels, 'length:', data.length, 'sampleRate:', data.sampleRate);
 
-      // Cache it
-      localStorage.setItem('sample-waveform-data', JSON.stringify(data));
+      // Try to cache it (skip if quota exceeded)
+      try {
+        console.log('[Waveform] Caching to localStorage...');
+        localStorage.setItem('sample-waveform-data', JSON.stringify(data));
+        console.log('[Waveform] Successfully cached');
+      } catch (cacheError) {
+        console.warn('[Waveform] Failed to cache (quota exceeded), continuing without cache:', cacheError.message);
+      }
 
       this.restoreAudioBuffer(data);
-      console.log('Sample waveform downloaded and cached');
+      console.log('[Waveform] Sample waveform loaded successfully');
       return true;
     } catch (error) {
-      console.error('Failed to load sample waveform:', error);
-      alert('샘플 파형 데이터를 불러올 수 없습니다.');
+      console.error('[Waveform] Failed to load sample waveform:', error);
+      alert('샘플 파형 데이터를 불러올 수 없습니다: ' + error.message);
       return false;
     }
   }
@@ -122,6 +135,8 @@ export class WaveformViewer {
    * Restore AudioBuffer from serialized data
    */
   restoreAudioBuffer(data) {
+    console.log('[Waveform] restoreAudioBuffer() - data:', data.numberOfChannels, 'channels,', data.length, 'samples,', data.sampleRate, 'Hz');
+
     const audioContext = new AudioContext();
     this.audioBuffer = audioContext.createBuffer(
       data.numberOfChannels,
@@ -138,9 +153,12 @@ export class WaveformViewer {
       }
     }
 
-    this.duration = this.audioBuffer.duration;
+    // Use stored duration if available, otherwise calculate from buffer
+    this.duration = data.duration || this.audioBuffer.duration;
+    console.log('[Waveform] AudioBuffer created, duration:', this.duration, 'seconds');
+
     this.render();
-    console.log('Waveform loaded successfully');
+    console.log('[Waveform] Waveform rendered successfully');
   }
 
   /**
@@ -195,25 +213,11 @@ export class WaveformViewer {
    * Load audio from URL
    */
   async loadAudioFromUrl(url) {
-    try {
-      const response = await fetch(url);
-      const arrayBuffer = await response.arrayBuffer();
-      const audioContext = new AudioContext();
-      this.audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-      this.duration = this.audioBuffer.duration;
+    console.log('[Waveform] loadAudioFromUrl() called with:', url);
 
-      // Save to cache for external access
-      this.saveWaveformToCache();
-
-      this.render();
-      return true;
-    } catch (error) {
-      console.error('Failed to load audio from URL:', error);
-
-      // Fallback: load sample waveform
-      console.log('Trying to load sample waveform...');
-      return await this.loadSampleWaveform();
-    }
+    // Skip video download on external access - go straight to sample waveform
+    console.log('[Waveform] Skipping video audio extraction, loading sample waveform directly...');
+    return await this.loadSampleWaveform();
   }
 
   /**

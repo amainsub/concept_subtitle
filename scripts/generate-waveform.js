@@ -41,7 +41,7 @@ async function generateWaveform(inputFile, outputFile) {
     const waveformData = {
       numberOfChannels: 2,
       length: downsampledLength,
-      sampleRate: 44100 / downsampleFactor, // Adjusted sample rate
+      sampleRate: 44100, // Keep original sample rate (Web Audio API requirement: min 3000Hz)
       duration: duration,
       channelData: [leftChannel, rightChannel]
     };
