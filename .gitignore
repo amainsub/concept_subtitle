@@ -7,4 +7,6 @@ dist/
 .vscode/
 
 # Exclude sample input files
-public/samples/
+public/samples/*.mp4
+public/samples/*.srt
+public/samples/*.ass
