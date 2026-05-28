@@ -70,12 +70,100 @@ export class WaveformViewer {
       this.audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
       this.duration = this.audioBuffer.duration;
 
+      // Save to cache for external access
+      this.saveWaveformToCache();
+
       this.render();
       return true;
     } catch (error) {
       console.error('Failed to load audio:', error);
+
+      // Automatically load sample waveform
+      console.log('Loading sample waveform...');
+      return await this.loadSampleWaveform();
+    }
+  }
+
+  /**
+   * Load sample waveform from server
+   */
+  async loadSampleWaveform() {
+    try {
+      // Try to load cached waveform from localStorage first
+      const cachedData = localStorage.getItem('sample-waveform-data');
+      if (cachedData) {
+        console.log('Loading waveform from cache...');
+        const data = JSON.parse(cachedData);
+        this.restoreAudioBuffer(data);
+        return true;
+      }
+
+      // Download from server
+      console.log('Downloading sample waveform (7MB)...');
+      const response = await fetch('/samples/sample-waveform.json');
+      if (!response.ok) throw new Error('Sample waveform not found');
+
+      const data = await response.json();
+
+      // Cache it
+      localStorage.setItem('sample-waveform-data', JSON.stringify(data));
+
+      this.restoreAudioBuffer(data);
+      console.log('Sample waveform downloaded and cached');
+      return true;
+    } catch (error) {
+      console.error('Failed to load sample waveform:', error);
+      alert('샘플 파형 데이터를 불러올 수 없습니다.');
       return false;
     }
+  }
+
+  /**
+   * Restore AudioBuffer from serialized data
+   */
+  restoreAudioBuffer(data) {
+    const audioContext = new AudioContext();
+    this.audioBuffer = audioContext.createBuffer(
+      data.numberOfChannels,
+      data.length,
+      data.sampleRate
+    );
+
+    // Copy channel data
+    for (let channel = 0; channel < data.numberOfChannels; channel++) {
+      const channelData = this.audioBuffer.getChannelData(channel);
+      const sourceData = data.channelData[channel];
+      for (let i = 0; i < sourceData.length; i++) {
+        channelData[i] = sourceData[i];
+      }
+    }
+
+    this.duration = this.audioBuffer.duration;
+    this.render();
+    console.log('Waveform loaded successfully');
+  }
+
+  /**
+   * Save current waveform to localStorage
+   */
+  saveWaveformToCache() {
+    if (!this.audioBuffer) return;
+
+    const channelData = [];
+    for (let channel = 0; channel < this.audioBuffer.numberOfChannels; channel++) {
+      const data = this.audioBuffer.getChannelData(channel);
+      channelData.push(Array.from(data));
+    }
+
+    const waveformData = {
+      numberOfChannels: this.audioBuffer.numberOfChannels,
+      length: this.audioBuffer.length,
+      sampleRate: this.audioBuffer.sampleRate,
+      channelData: channelData
+    };
+
+    localStorage.setItem('sample-waveform-data', JSON.stringify(waveformData));
+    console.log('Waveform saved to cache');
   }
 
   /**
@@ -114,12 +202,17 @@ export class WaveformViewer {
       this.audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
       this.duration = this.audioBuffer.duration;
 
+      // Save to cache for external access
+      this.saveWaveformToCache();
+
       this.render();
       return true;
     } catch (error) {
       console.error('Failed to load audio from URL:', error);
-      // Fallback: just set duration without waveform
-      return false;
+
+      // Fallback: load sample waveform
+      console.log('Trying to load sample waveform...');
+      return await this.loadSampleWaveform();
     }
   }
 

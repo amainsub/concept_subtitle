@@ -7,6 +7,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
+    host: true, // Allow external connections
     headers: {
       'Cache-Control': 'public, max-age=31536000', // Cache static files for 1 year
     },
