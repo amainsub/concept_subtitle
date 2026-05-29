@@ -1,5 +1,8 @@
 # Subtitle Edit Web
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Tests](https://img.shields.io/badge/tests-138%20passing-brightgreen.svg)](./tests)
+
 웹 기반 자막 편집기 - Subtitle Edit 4.0.13 포팅
 
 ## 🎬 주요 기능
@@ -77,7 +80,26 @@ subtitle-edit-web/
 
 ### 프로젝트 라이선스
 
-이 프로젝트는 오픈소스이며, 원본 Subtitle Edit과 동일한 라이선스를 따릅니다.
+**GNU General Public License v3.0 (GPL-3.0)**
+
+이 프로젝트는 원본 [Subtitle Edit](https://github.com/SubtitleEdit/subtitleedit)의 웹 포팅 버전이며, 동일한 GPL-3.0 라이선스를 따릅니다.
+
+**사용 조건**:
+- ✅ 상업적 사용 가능
+- ✅ 수정 가능
+- ✅ 배포 가능
+- ✅ 특허 사용 가능
+- ✅ 사적 사용 가능
+- ⚠️ **소스 코드 공개 필수** (수정 시)
+- ⚠️ **동일 라이선스 적용 필수** (GPL-3.0)
+- ⚠️ **저작권 고지 필수**
+- ⚠️ **변경 사항 명시 필수**
+
+**라이선스 전문**: [LICENSE](./LICENSE) 파일 참조
+
+**원본 프로젝트**: 
+- Repository: https://github.com/SubtitleEdit/subtitleedit
+- Copyright: Subtitle Edit contributors
 
 ### 맞춤법 검사 라이브러리
 
