@@ -79,6 +79,22 @@ subtitle-edit-web/
 
 이 프로젝트는 오픈소스이며, 원본 Subtitle Edit과 동일한 라이선스를 따릅니다.
 
+### 맞춤법 검사 라이브러리
+
+**Typo.js** - JavaScript Hunspell 스펠체커
+
+**출처**:
+- 프로젝트: [Typo.js](https://github.com/cfinke/Typo.js)
+- 저작자: Christopher Finke <cfinke@gmail.com>
+- 버전: 1.3.2
+
+**라이선스**: BSD-3-Clause (Modified BSD License)
+- ✅ 상업적 사용 가능
+- ✅ 수정 가능
+- ✅ 배포 가능
+- ⚠️ 저작권 고지 필요
+- ⚠️ 라이선스 포함 필요
+
 ### 한국어 맞춤법 사전 라이선스
 
 한국어 맞춤법 검사 기능은 **hunspell 한국어 데이터 프로젝트**의 사전을 사용합니다.
